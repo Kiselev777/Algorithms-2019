@@ -87,8 +87,12 @@ public class JavaAlgorithms {
      * но приветствуется попытка решить её самостоятельно.
      */
     static public int josephTask(int menNumber, int choiceInterval) {
-        throw new NotImplementedError();
+        int answer = 0;
+        for (int i = 1; i <= menNumber; ++i)
+            answer = (answer + choiceInterval) % i;
+        return answer + 1;
     }
+    //Нуууууууууууууу,я попытался
 
     /**
      * Наибольшая общая подстрока.
