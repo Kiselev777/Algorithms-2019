@@ -5,6 +5,8 @@ import kotlin.Pair;
 
 import java.util.Set;
 
+import static java.lang.Math.sqrt;
+
 @SuppressWarnings("unused")
 public class JavaAlgorithms {
     /**
@@ -114,7 +116,25 @@ public class JavaAlgorithms {
      * Единица простым числом не считается.
      */
     static public int calcPrimesNumber(int limit) {
-        throw new NotImplementedError();
+        int answer=0;
+        if (limit==2)
+            return 1;
+        for (int i = 3; i <=limit ; i=i+2) {
+            if(isPrime(i))
+                answer++;
+        }
+        if (answer>0)
+            answer++;
+        return answer;
+    }
+    private static boolean isPrime(int number){
+        if (number==1)
+            return false;
+        for (int i = 2; i <=sqrt(number) ; i++) {
+            if (number%i==0)
+                return false;
+        }
+        return true;
     }
 
     /**
