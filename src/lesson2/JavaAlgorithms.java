@@ -88,6 +88,7 @@ public class JavaAlgorithms {
      */
     static public int josephTask(int menNumber, int choiceInterval) {
         int answer = 0;
+        assert  menNumber >= 1 && choiceInterval >= 1;
         for (int i = 1; i <= menNumber; ++i)
             answer = (answer + choiceInterval) % i;
         return answer + 1;
@@ -134,7 +135,7 @@ public class JavaAlgorithms {
     private static boolean isPrime(int number){
         if (number==1)
             return false;
-        for (int i = 2; i <=sqrt(number) ; i++) {
+        for (int i = 3; i <=sqrt(number) ; i=i+2) {
             if (number%i==0)
                 return false;
         }
