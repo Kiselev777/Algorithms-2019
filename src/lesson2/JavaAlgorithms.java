@@ -93,6 +93,8 @@ public class JavaAlgorithms {
             answer = (answer + choiceInterval) % i;
         return answer + 1;
     }
+    // Сложность алгоритма T = O(n)
+    // Затраты памяти R = O(n)
     //Нуууууууууууууу,я попытался
 
     /**
@@ -106,9 +108,27 @@ public class JavaAlgorithms {
      * Если имеется несколько самых длинных общих подстрок одной длины,
      * вернуть ту из них, которая встречается раньше в строке first.
      */
-    static public String longestCommonSubstring(String firs, String second) {
-        throw new NotImplementedError();
+    static public String longestCommonSubstring(String first, String second) {
+        if (first.equals(second))
+            return first;
+        int[][] chess= new int[first.length()][second.length()];
+        int max = 0;
+        int l = 0;
+        for (int i = 0; i < first.length(); i++) {
+            for (int j = 0; j < second.length(); j++) {
+                if (first.charAt(i) == second.charAt(j)) {
+                    chess[i][j] = i != 0 && j != 0 ? chess[i - 1][j - 1] + 1 : 1;
+                    if (chess[i][j] > l) {
+                        l = chess[i][j];
+                        max = i;
+                    }
+                }
+            }
+        }
+        return first.substring(max - l + 1, max + 1);
     }
+    // Сложность алгоритма T = O(m * n)
+    // Затраты по памяти R = O(n)
 
     /**
      * Число простых чисел в интервале
@@ -141,6 +161,8 @@ public class JavaAlgorithms {
         }
         return true;
     }
+    //Сложность алг T=O(nlog(n))
+    //Затрат по памяти R=O(n)
 
     /**
      * Балда

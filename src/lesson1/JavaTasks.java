@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class JavaTasks {
+public class JavaTasks extends Sorts  {
     /**
      * Сортировка времён
      * <p>
@@ -104,20 +104,28 @@ public class JavaTasks {
     static public void sortTemperatures(String inputName, String outputName) throws IOException {
         PrintWriter print = new PrintWriter(outputName);
         Scanner sc = new Scanner(new File(inputName));
-        List<Float> sort = new ArrayList<>();
-        Float temperature;
+        List<Integer> sort = new ArrayList<>();
+        Double temperature;
+        double min=273.0*10.0;
         while (sc.hasNext()) {
             try {
-                temperature = Float.parseFloat(sc.nextLine());
+                temperature = Double.parseDouble(sc.nextLine());
             } catch (Exception e) {
                 throw new IllegalArgumentException();
             }
-            if (-273.0 <= temperature && temperature <= 500)
-                sort.add(temperature);
+            if (-273.0 <= temperature && temperature <= 500.0)
+                sort.add((int) (temperature*10+min));
             else throw new NumberFormatException();
         }
-        Collections.sort(sort);
-        sort.forEach(print::println);
+        int [] b=new int[sort.size()];
+        for (int i = 0; i <sort.size() ; i++) {
+            b[i]=sort.get(i);
+        }
+        int max=Collections.max(sort);
+        int[] a= countingSort(b,max);
+        for (int e:a) {
+            print.print((((e - min)) / 10)+"\n");
+        }
         print.close();
     }
     //Затрыты по памяти- O(n)

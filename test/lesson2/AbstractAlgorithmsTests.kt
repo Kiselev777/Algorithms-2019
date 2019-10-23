@@ -71,6 +71,8 @@ abstract class AbstractAlgorithmsTests {
             assertEquals(1, josephTask(menNumber, 2))
             menNumber *= 2
         }
+        assertEquals(10, josephTask(94, 4))
+        assertEquals(391, josephTask(6732, 24))
     }
 
     fun longestCommonSubstring(longestCommonSubstring: (String, String) -> String) {
@@ -120,6 +122,8 @@ abstract class AbstractAlgorithmsTests {
                 File("input/ruslan_ludmila_2.txt").readText()
             ).trim()
         )
+        assertEquals("GHB", longestCommonSubstring("GHBHBHBHBHBH", "MGGGGGHB"))
+        assertEquals("ТЛо", longestCommonSubstring("ролроркаощурашщкоТЛоодлатд", "нгггнгнгнгнгнврТЛомч"))
     }
 
     fun calcPrimesNumber(calcPrimesNumber: (Int) -> Int) {
@@ -143,7 +147,11 @@ abstract class AbstractAlgorithmsTests {
         assertEquals(78498, calcPrimesNumber(1000000))
         assertEquals(148933, calcPrimesNumber(2000000))
         assertEquals(348513, calcPrimesNumber(5000000))
-        assertEquals(664579, calcPrimesNumber(10000000))
+        assertEquals(26, calcPrimesNumber(101))
+        assertEquals(168, calcPrimesNumber(1000))
+        assertEquals(148933, calcPrimesNumber(2000000))
+        assertEquals(0, calcPrimesNumber(-10))
+
     }
 
     fun baldaSearcher(baldaSearcher: (String, Set<String>) -> Set<String>) {
