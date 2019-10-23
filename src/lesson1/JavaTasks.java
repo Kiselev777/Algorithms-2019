@@ -2,11 +2,14 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class JavaTasks extends Sorts  {
+public class JavaTasks extends Sorts {
     /**
      * Сортировка времён
      * <p>
@@ -105,8 +108,8 @@ public class JavaTasks extends Sorts  {
         PrintWriter print = new PrintWriter(outputName);
         Scanner sc = new Scanner(new File(inputName));
         List<Integer> sort = new ArrayList<>();
-        Double temperature;
-        double min=273.0*10.0;
+        double temperature;
+        double min = 273.0 * 10.0;
         while (sc.hasNext()) {
             try {
                 temperature = Double.parseDouble(sc.nextLine());
@@ -114,22 +117,22 @@ public class JavaTasks extends Sorts  {
                 throw new IllegalArgumentException();
             }
             if (-273.0 <= temperature && temperature <= 500.0)
-                sort.add((int) (temperature*10+min));
+                sort.add((int) (temperature * 10 + min));
             else throw new NumberFormatException();
         }
-        int [] b=new int[sort.size()];
-        for (int i = 0; i <sort.size() ; i++) {
-            b[i]=sort.get(i);
+        int[] b = new int[sort.size()];
+        for (int i = 0; i < sort.size(); i++) {
+            b[i] = sort.get(i);
         }
-        int max=Collections.max(sort);
-        int[] a= countingSort(b,max);
-        for (int e:a) {
-            print.print((((e - min)) / 10)+"\n");
+        int max = Collections.max(sort);
+        int[] a = countingSort(b, max);
+        for (int e : a) {
+            print.print((((e - min)) / 10) + "\n");
         }
         print.close();
     }
     //Затрыты по памяти- O(n)
-    //Сложность алгоритма T=O(n*log(n))
+    //Сложность алгоритма T=O(n))
 
 
     /**
