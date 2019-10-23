@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class JavaTasks extends Sorts {
+public class JavaTasks   {
     /**
      * Сортировка времён
      * <p>
@@ -40,7 +40,7 @@ public class JavaTasks extends Sorts {
      * <p>
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
-    static public void sortTimes(String inputName, String outputName) throws IOException {
+    static public void sortTimes(String inputName, String outputName) {
         throw new NotImplementedError();
     }
 
@@ -125,7 +125,7 @@ public class JavaTasks extends Sorts {
             b[i] = sort.get(i);
         }
         int max = Collections.max(sort);
-        int[] a = countingSort(b, max);
+        int[] a = Sorts.countingSort(b, max);
         for (int e : a) {
             print.print((((e - min)) / 10) + "\n");
         }
