@@ -94,7 +94,7 @@ public class JavaAlgorithms {
         return answer + 1;
     }
     // Сложность алгоритма T = O(n)
-    // Затраты памяти R = O(n)
+    // Затраты памяти R =O(const)
     //Нуууууууууууууу,я попытался
 
     /**
@@ -127,8 +127,8 @@ public class JavaAlgorithms {
         }
         return first.substring(max - l + 1, max + 1);
     }
-    // Сложность алгоритма T = O(m * n)
-    // Затраты по памяти R = O(n)
+    // Сложность алгоритма T = O(first.length * second.length)
+    // Затраты по памяти R=O(first.length * second.length)
 
     /**
      * Число простых чисел в интервале
