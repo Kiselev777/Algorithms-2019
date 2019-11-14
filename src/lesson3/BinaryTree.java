@@ -35,12 +35,10 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
         Node<T> newNode = new Node<>(t);
         if (closest == null) {
             root = newNode;
-        }
-        else if (comparison < 0) {
+        } else if (comparison < 0) {
             assert closest.left == null;
             closest.left = newNode;
-        }
-        else {
+        } else {
             assert closest.right == null;
             closest.right = newNode;
         }
@@ -72,10 +70,45 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      * Удаление элемента в дереве
      * Средняя
      */
+    //Затраты по памяти-O(1)
+    //Трудоёмкость-O(высота бинарного дерева),самый быстрый случай O(log(n))
     @Override
     public boolean remove(Object o) {
-        // TODO
-        throw new NotImplementedError();
+        if (root == null)
+            return false;
+        root = remove(root, (T) o);
+        size--;
+        return true;
+    }
+
+    private Node<T> remove(Node<T> root, T t) {
+        if (root == null)
+            return null;
+        int com = t.compareTo(root.value);
+        if (com < 0)
+            root.left = remove(root.left, t);
+        else if (com > 0)
+            root.right = remove(root.right, t);
+        else {
+            if (root.left != null && root.right != null) {
+                Node<T> newRoot = new Node<>(min(root.right).value);
+                newRoot.left = root.left;
+                newRoot.right = root.right;
+                root = newRoot;
+                root.right = remove(root.right, root.value);
+            } else if (root.left != null)
+                root = root.left;
+            else root = root.right;
+        }
+        return root;
+    }
+
+    private Node<T> min(Node<T> root) {
+        if (root.left == null) {
+            return root;
+        } else {
+            return min(root.left);
+        }
     }
 
     @Override
@@ -95,51 +128,73 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
         int comparison = value.compareTo(start.value);
         if (comparison == 0) {
             return start;
-        }
-        else if (comparison < 0) {
+        } else if (comparison < 0) {
             if (start.left == null) return start;
             return find(start.left, value);
-        }
-        else {
+        } else {
             if (start.right == null) return start;
             return find(start.right, value);
         }
     }
 
     public class BinaryTreeIterator implements Iterator<T> {
+        private Node<T> current;
+        private LinkedList<Node<T>> nodeList;
 
         private BinaryTreeIterator() {
-            // Добавьте сюда инициализацию, если она необходима
+            nodeList = new LinkedList<>();
+            current = root;
+            while (current != null) {
+                nodeList.addFirst(current);
+                current = current.left;
+            }
         }
 
         /**
          * Проверка наличия следующего элемента
          * Средняя
+         * Затраты по памяти O(1)
+         * Сложность алгоритма O(1)
          */
         @Override
         public boolean hasNext() {
-            // TODO
-            throw new NotImplementedError();
+            return !nodeList.isEmpty();
         }
 
         /**
          * Поиск следующего элемента
          * Средняя
+         * Затраты по памяти O(1)
+         * Сложность алгоритма O(n)
          */
         @Override
         public T next() {
-            // TODO
-            throw new NotImplementedError();
+            if (hasNext())
+                current = nodeList.pop();
+            Node node = current;
+            if (current == null) throw new IllegalArgumentException();
+            if (node.right != null) {
+                node = node.right;
+                while (node != null) {
+                    nodeList.addFirst(node);
+                    node = node.left;
+                }
+            }
+            return current.value;
         }
 
         /**
          * Удаление следующего элемента
          * Сложная
+         * Сложность - O(height)
+         * Ресурсоемкость - O(1)
          */
         @Override
         public void remove() {
-            // TODO
-            throw new NotImplementedError();
+            if (current != null)
+                BinaryTree.this.remove(current.value);
+            else throw new NoSuchElementException();
+
         }
     }
 
