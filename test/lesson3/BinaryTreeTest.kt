@@ -82,6 +82,19 @@ class BinaryTreeTest {
                 "After removal of $toRemove from $list binary tree height increased"
             )
         }
+        val tree = create()
+        tree.add(56)
+        assertTrue(tree.remove(56))
+        assertFalse(tree.remove(55))
+        tree.add(1)
+        tree.add(2)
+        tree.add(3)
+        assertTrue(tree.remove(1))
+        for (i in 1..20)
+            tree.add(random.nextInt(500))
+        val s = tree.size
+        tree.remove(3)
+        assertEquals(s - 1, tree.size)
 
     }
 
@@ -127,6 +140,32 @@ class BinaryTreeTest {
                     "Call of iterator.hasNext() changes its state while iterating $treeSet"
                 )
             }
+        }
+        val list = mutableListOf<Int>()
+        for (i in 1..20)
+            list.add(i)
+        val treeSet = TreeSet<Int>()
+        val binarySet = create()
+        assertFalse(binarySet.iterator().hasNext(), "Iterator of empty set should not have next element")
+        for (element in list) {
+            treeSet += element
+            binarySet += element
+        }
+        val treeIt = treeSet.iterator()
+        val binaryIt = binarySet.iterator()
+        println("Traversing $list")
+        while (treeIt.hasNext()) {
+            assertEquals(treeIt.next(), binaryIt.next(), "Incorrect iterator state while iterating $treeSet")
+        }
+        val it1 = binarySet.iterator()
+        val it2 = binarySet.iterator()
+        println("Consistency check for hasNext $list")
+        while (it1.hasNext()) {
+            assertEquals(
+                it2.next(), it1.next(),
+                "Call of iterator.hasNext() changes its state while iterating $treeSet"
+            )
+
         }
     }
 
@@ -185,6 +224,36 @@ class BinaryTreeTest {
             }
             assertTrue(binarySet.checkInvariant(), "Binary tree invariant is false after tree.iterator().remove()")
         }
+        val list = listOf(1, 3, 4, 5, 6, 7, 78, 56, 76, 874)
+        val treeSet = TreeSet<Int>()
+        val binarySet = create()
+        for (element in list) {
+            treeSet += element
+            binarySet += element
+        }
+        val toRemove = 874
+        treeSet.remove(toRemove)
+        println("Removing $toRemove from $list")
+        val iterator = binarySet.iterator()
+        var counter = binarySet.size
+        while (iterator.hasNext()) {
+            val element = iterator.next()
+            counter--
+            print("$element ")
+            if (element == toRemove) {
+                iterator.remove()
+            }
+        }
+        assertEquals(treeSet.size, binarySet.size)
+        assertEquals(0, counter)
+        assertEquals<SortedSet<*>>(treeSet, binarySet)
+        for (element in list) {
+            val i = element != toRemove
+            assertEquals(
+                i, element in binarySet
+            )
+        }
+        assertTrue(binarySet.checkInvariant())
     }
 
     @Test
